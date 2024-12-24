@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <title>销量地图</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="static/css/themify-icons.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="static/css/slick.css">
+  <!-- venobox popup -->
+  <link rel="stylesheet" href="static/css/venobox.css">
+  <!-- aos -->
+  <link rel="stylesheet" href="static/css/aos.css">
+
+  <!-- Main Stylesheet -->
+  <link href="static/css/style.css" rel="stylesheet">
+
+  <!--Favicon-->
+
+
+
+</head>
+
+<body>
+
+
+<!-- navigation -->
+<section class="fixed-top navigation">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="/">
+         <img src="static/image/home.png" alt="logo" style="width: 50px; height: auto;">
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- navbar -->
+      <div class="collapse navbar-collapse text-center" id="navbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/about">K-means聚类分析</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/service">销量地图</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">前15的店铺销售额和营销词云图</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bingtu">价格饼状图</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+<!-- /navigation -->
+
+<!-- service -->
+<section class="section-lg service-bg-image position-relative" style="background-image: url(static/image/service-page.png);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="section-title">粽子销量地区分布图（热力图）</h2>
+            </div>
+            <div id="china_map" style="width:1000px;height:1000px;"></div>
+            <div class="col-lg-12 mb-100">
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    从这个地图可以看出，东部沿海地区对于粽子的销量会比较多。尤其是浙江地区，粽子销量断档的来到了百万级别，这可能是因为浙江是粽子的主要
+                    产地之一。<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    最有名的是五芳斋粽子，产地浙江嘉兴,特点是糯而不烂、肥而不腻、肉嫩味美、咸甜适中,号称“江南粽子大王"，淘宝销量来到了两百万以上。这对于
+                    消费者购买粽子有参考价值。
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- background shapes -->
+    <img class="service-bg-1 up-down-animation" src="static/picture/feature-bg-2.png" alt="">
+    <img class="service-bg-2 left-right-animation" src="static/picture/seo-half-cycle.png" alt="">
+    <img class="service-bg-3 up-down-animation" src="static/picture/team-bg-triangle.png" alt="">
+    <img class="service-bg-4 left-right-animation" src="static/picture/green-dot.png" alt="">
+    <img class="service-bg-5 up-down-animation" src="static/picture/team-bg-triangle.png" alt="">
+</section>
+<!-- /service -->
+<script type="text/javascript" src="static/js/echarts.js"></script>
+<script type="text/javascript" src="static/js/china.js"></script>
+
+
+<script>
+    var china_map =echarts.init(document.getElementById("china_map"),'infographic');
+	var mydata = {{ province | safe }}
+
+	var option = {
+		//backgroundColor: '#FFFFFF',
+
+		tooltip : {
+			trigger: 'item'
+		},
+		visualMap: {
+			show : false,
+			x: 'left',
+			y: 'bottom',
+			//layoutCenter:['30%','30%'],
+			splitList: [{start: 300000, end:10000000},
+				{start: 150000, end:300000},{start: 100000, end: 150000},
+				{start: 50000, end: 100000},{start: 25000, end: 50000},
+				{start: 10000, end:25000},{start: 0, end: 10000},
+			],
+			colors: ['#4682B4', '#6CA6CD', '#87CEEB', '#ADD8E6', '#D0E9FF']
+            //colors : ['#D0E9FF', '#ADD8E6', '#87CEEB', '#6CA6CD', '#4682B4']
+
+		},
+		series: [{
+			name: '各省份对比',
+			type: 'map',
+			mapType: 'china',
+			roam: true,
+			label: {
+				normal: {
+					show: false
+				},
+				emphasis: {
+					show: false
+				}
+			},
+			data:mydata
+		}]
+	};
+
+china_map.setOption(option);
+</script>
+
+<!-- jQuery -->
+<script src="static/js/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="static/js/bootstrap.min.js"></script>
+<!-- slick slider -->
+<script src="static/js/slick.min.js"></script>
+<!-- venobox -->
+<script src="static/js/venobox.min.js"></script>
+<!-- aos -->
+<script src="static/js/aos.js"></script>
+<!-- Main Script -->
+<script src="static/js/script.js"></script>
+
+</body>
+</html>

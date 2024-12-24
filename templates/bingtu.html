@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <title>销量前十五的店铺</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="static/css/themify-icons.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="static/css/slick.css">
+  <!-- venobox popup -->
+  <link rel="stylesheet" href="static/css/venobox.css">
+  <!-- aos -->
+  <link rel="stylesheet" href="static/css/aos.css">
+
+  <!-- Main Stylesheet -->
+  <link href="static/css/style.css" rel="stylesheet">
+    <style>
+        #pie { //设置饼图大小
+            width: 1200px;
+            height: 1200px;
+        }
+    </style>
+    <script type="text/javascript" src="static/js/echarts.js"></script>
+  <!--Favicon-->
+</head>
+
+<body>
+<!-- navigation -->
+<section class="fixed-top navigation">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="/">
+         <img src="static/image/home.png" alt="logo" style="width: 50px; height: auto;">
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- navbar -->
+      <div class="collapse navbar-collapse text-center" id="navbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/about">K-means聚类分析</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/service">销量地图</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">前15的店铺销售额和营销词云图</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">价格饼状图</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+<!-- /navigation -->
+
+<!--/charts -->
+<section class="section-lg charts pb-0">
+    <div class="container">
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+    <div id="pie" ,align ="center"></div>
+    <script>
+        // 饼状图
+        // 基于准备好的dom，初始化echarts实例
+        var pie = echarts.init(document.getElementById('pie'));
+        // 指定图表的配置项和数据
+        pieOption = {
+            // 标题
+            title: {
+                 text: '不同价格区间的粽子销量'
+            },
+            // 图例
+            tooltip: {
+                show: true,
+                trigger: "item",
+                backgroundColor: "#c0c0c0",
+                // {a}（系列名称），{b}（数据项名称），{c}（数值）, {d}（百分比）
+                formatter: "{a}：{b}<br/>{c} ({d}%)",
+                fontsize: 15
+            },
+            // 不同区域的颜色
+            color: ['#3e87ff', '#c0c0c0', '#b9cfec','#191970','#4B0082'],
+            series: [
+                {
+                    name: '价格区间',
+                    type: 'pie',
+                    // 数组的第一项是内半径，第二项是外半径；可以设置不同的内外半径显示成圆环图
+                    radius: ['40%', '60%'],
+                    // 饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标；设置成百分比时第一项是相对于容器宽度，第二项是相对于容器高度
+                    center: ['50%', '40%'],
+                    data: {{ datas | safe }},
+                    itemStyle: {
+                        // 显示图例
+                        normal: {
+                            label: {
+                                show: true
+                            },
+                            labelLine: {
+                                show: true
+                            }
+                        },
+                        emphasis: {
+                            // 图形阴影的模糊大小
+                            shadowBlur: 10,
+                            // 阴影水平方向上的偏移距离
+                            shadowOffsetX: 0,
+                            // 阴影颜色
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        pie.setOption(pieOption);
+    </script>
+        </div>
+    <!-- background shapes -->
+    <img class="contact-bg-1 up-down-animation" src="static/picture/feature-bg-2.png" alt="background-shape">
+    <img class="contact-bg-2 left-right-animation" src="static/picture/green-half-cycle.png" alt="background-shape">
+    <img class="contact-bg-3 up-down-animation" src="static/picture/green-dot.png" alt="background-shape">
+    <img class="contact-bg-4 left-right-animation" src="static/picture/service-half-cycle.png" alt="background-shape">
+    <img class="contact-bg-5 up-down-animation" src="static/picture/feature-bg-2.png" alt="background-shape">
+</section>
+
+<section class="section-lg about pb-0">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 mb-100">
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            可以看出，100元以下的粽子更受到欢迎，其中21-50元之间的粽子销量几乎占了一半。
+        </p>
+      </div>
+    </div>
+  </div>
+    <img src="static/picture/green-dot.png" alt="background-shape" class="about-bg-1 up-down-animation">
+      <!-- 背景形状图片2，带有左右动画效果 -->
+    <img src="static/picture/blue-dot.png" alt="background-shape" class="about-bg-2 left-right-animation">
+      <!-- 背景形状图片3，带有上下动画效果 -->
+    <img src="static/picture/green-half-cycle.png" alt="background-shape" class="about-bg-3 up-down-animation">
+      <!-- 背景形状图片4，带有左右动画效果 -->
+    <img src="static/picture/seo-ball-1.png" alt="background-shape" class="about-bg-4 left-right-animation">
+      <!-- 背景形状图片5，带有上下动画效果 -->
+    <img src="static/picture/team-bg-triangle.png" alt="background-shape" class="about-bg-5 up-down-animation">
+      <!-- 背景形状图片6，带有左右动画效果 -->
+    <img src="static/picture/service-half-cycle.png" alt="background-shape" class="about-bg-6 left-right-animation">
+</section>
+
+<!-- /contact -->
+<script src="static/js/echarts.js"></script>
+<!-- jQuery -->
+<script src="static/js/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="static/js/bootstrap.min.js"></script>
+<!-- slick slider -->
+<script src="static/js/slick.min.js"></script>
+<!-- venobox -->
+<script src="static/js/venobox.min.js"></script>
+<!-- aos -->
+<script src="static/js/aos.js"></script>
+<!-- Main Script -->
+<script src="static/js/script.js"></script>
+
+</body>
+</html>
